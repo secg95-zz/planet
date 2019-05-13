@@ -15,6 +15,14 @@ import pdb
 
 
 def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, is_inception=False):
+    """
+       Train_model function loads the dataloa der to the choosen model, run train and validation steps
+       model: model choosen
+       dataloaders: a dictionary of data loaders one for the training epochs and on efor the validation ones
+       criterion  loss function
+       optimizer: derivates for backpropagation
+       device: GPU or CPU
+    """
     since = time.time()
 
     val_acc_history = []
