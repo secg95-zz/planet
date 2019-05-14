@@ -47,7 +47,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, is
             # Iterate over data.
             for inputs, labels in dataloaders[phase]:
                 inputs = inputs[:,0:3,:,:]
-                pdb.set_trace()
+                
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 

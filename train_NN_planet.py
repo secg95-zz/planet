@@ -14,6 +14,7 @@ from train_function import train_model
 import matplotlib.pyplot as plt
 import time
 import os
+import pandas as pd
 import copy
 print("PyTorch Version: ",torch.__version__)
 print("Torchvision Version: ",torchvision.__version__)
@@ -24,18 +25,20 @@ print("Torchvision Version: ",torchvision.__version__)
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
 model_name = "vgg"
 #LAbel problem, atmospheric or others
-problem = 'atmospheric'
-# Number of classes in the dataset
-num_classes_atmospheric = 4
-num_classes_other = 13
+problem = 'other'
 
-#number of classes for the current training, it must ti be choose betwwen atmospheric and others
-num_classes = num_classes_atmospheric
 # Batch size for training (change depending on how much memory you have)
-batch_size = 2
-
+batch_size = 24
 # Number of epochs to train for
 num_epochs = 15
+#num_classes
+num_classes = 0
+#labels
+if (problem == 'atmospheric'):
+    num_classes = 4
+else:
+    labels = pd.read_csv('data/train_v2.csv')
+    num_classes = len(list(set(labels['tags'])))
 
 # Flag for feature extracting. When False, we finetune the whole model,
 #   when True we only update the reshaped layer params

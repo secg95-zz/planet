@@ -77,20 +77,27 @@ class PlanetDataset(Dataset):
                    break
             #tag to be returned
             Tag = tags
-
+        #TODO put an assert for the only two possible problems
         else:
-            #TODO fix tgas for non atmospheric categories!!!!!!!
-            tags = np.zeros(len(self.other_tags))
-            Tag = [x for x in Tag[0].split(' ') if x in self.other_tags]
+            #temp variable to store the categorical not atmospheric tag.
+            temp = 0
+            #extracting the non atmospherical attributes
+            Tag = [x for x in Tag.split(' ') if x in self.other_tags]
+            #Join all the categories in one string
             Tag = ' '.join(Tag)
-            tags_train[i_img,1:] = [tag in Tag for tag in other_tags]
-            Tag = torch.from_numpy(tags.astype('long'))
+            #making a list of all possible non atmospheric tags TODO define this list as attribute of the class
+            tags = list(set(self.labels['tags']))
 
+            #tag extarction
+            for i in range(len(tags)):
+                if Tag in tags[i]:
+                   temp = i
+                   break
+            #Tag signation to the variable that is going to be returned
+            Tag = temp
         #apllying transforms to the image
         if self.transform:
             image  = self.transform(image)
         #return
         sample =[image,Tag]
         return sample
-
-
